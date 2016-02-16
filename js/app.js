@@ -5,7 +5,7 @@ var characters=['images/char-boy.png',
                 'images/char-princess-girl.png'];
 
 // Enemies our player must avoid
-var Enemy = function(xCoord, yCoord, difficulty) {
+var Enemy = function(xCoord, yCoord) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -17,7 +17,7 @@ var Enemy = function(xCoord, yCoord, difficulty) {
     this.height =107;
     this.x=xCoord;
     this.y=yCoord;
-    this.difficulty=Math.pow(difficulty,2);
+
 };
 
 Enemy.prototype.checkCollision = function() {
@@ -35,7 +35,7 @@ Enemy.prototype.update = function(dt) {
     if(this.x >= ctx.canvas.width-1) {
         this.x=-175;
     } else {
-        this.x=this.x+(this.difficulty*dt);
+        this.x=this.x+((10*player.level)*dt);
     }
     this.checkCollision();
 };
@@ -91,7 +91,7 @@ Player.prototype.nextLevel = function() {
     for(i=1;i<=this.level;i++){
         var xCoord = Math.floor(i/4)*200;
         var yCoord = i%4*100 +50;
-        allEnemies.push(new Enemy(xCoord, yCoord, difficulty))
+        allEnemies.push(new Enemy(xCoord, yCoord))
     }
     this.reset();
 
@@ -150,15 +150,8 @@ Star.prototype.render = function() {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var difficulty = 8;
 var allEnemies =[];
 
-/*for(i=1;i<=difficulty;i++){
-    var xCoord = Math.floor(i/4)*200;
-    var yCoord = i%4*100 +50;
-    allEnemies.push(new Enemy(xCoord, yCoord, difficulty))
-}*/
-//var allEnemies = [new Enemy];
 var player =new Player;
 var star = new Star;
 //var text = new SelectCharacter;
