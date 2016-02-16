@@ -13,7 +13,7 @@
  * the canvas' context (ctx) object globally available to make writing app.js
  * a little simpler to work with.
  */
-
+var timeout = 0;
 var Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
@@ -147,10 +147,30 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        allEnemies.forEach(function(enemy) {
-            enemy.render();
-        });
-
+         if(star.achieved && timeout <=90){
+            ctx.font="60px Helvetica";
+            ctx.fillStyle="#fc4a1a";
+            ctx.strokeStyle="#f7e65a";
+            ctx.fillText("Level " + player.level + " Achieved", 10, 170);
+            ctx.strokeText("Level " + player.level + " Achieved", 10, 170);
+            timeout++;
+            if(timeout==90){
+                star.achieved=false;
+                timeout=0;
+            }
+         } else if(player.characterSelected) {
+            allEnemies.forEach(function(enemy) {
+                enemy.render();
+            });
+            star.render();
+        } else {
+            //SelectCharacter.render();
+            ctx.font="40px Helvetica";
+            ctx.fillText("Personal Space Invaders", 10, 170);
+            ctx.font = "18px Arial";
+            ctx.fillText("Press left or right arrow key to toggle through characters",25,240);
+            ctx.fillText("Select by pressing enter", 150, 270);
+        }
         player.render();
     }
 
@@ -171,7 +191,12 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png',
+        'images/Star.png'
     ]);
     Resources.onReady(init);
 
